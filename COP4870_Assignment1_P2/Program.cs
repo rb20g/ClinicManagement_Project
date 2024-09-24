@@ -25,13 +25,14 @@ namespace MyApp
                 Console.WriteLine("D. Show List of Patients");
                 Console.WriteLine("E. Show List of Physicians");
                 Console.WriteLine("F. Show List of Appointments");
+                Console.WriteLine("G. Delete Patient");
                 Console.WriteLine("Q. Quit");
 
                 string input = Console.ReadLine() ?? string.Empty;
 
                 if (char.TryParse(input, out char choice)) //reference parameter in C++, can only use choice inside this if line
                 {
-               
+
                     switch (choice)
                     {
                         case 'a':
@@ -50,8 +51,8 @@ namespace MyApp
                             var PatientGender = Console.ReadLine();
                             Console.WriteLine("Any patient medical notes (diagnoses/prescriptions): ");
                             var PatientMedicalNotes = Console.ReadLine();
-                            var newPatient = new Patient { Name = PatientName ?? string.Empty, Address = PatientAddress ?? string.Empty, Birthday = PatientBirthday, Race = PatientRace ?? string.Empty, Gender = PatientGender ?? string.Empty, MedicalNotes = PatientMedicalNotes ?? string.Empty }; 
-                            PatientServiceProxy.Current.AddPatient(newPatient);
+                            var newPatient = new Patient { Name = PatientName ?? string.Empty, Address = PatientAddress ?? string.Empty, Birthday = PatientBirthday, Race = PatientRace ?? string.Empty, Gender = PatientGender ?? string.Empty, MedicalNotes = PatientMedicalNotes ?? string.Empty };
+                            PatientServiceProxy.Current.AddOrUpdatePatient(newPatient);
                             break;
 
                         case 'b':
@@ -66,7 +67,7 @@ namespace MyApp
                             //DateOnly.TryParseExact(Console.ReadLine(), "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out PhysicianGradDate);
                             Console.WriteLine("Physicians specialization: ");
                             var PhysicianSpecial = Console.ReadLine();
-                            var newPhysician = new Physician { Name  = PhysicianName ?? string.Empty, LicenseNumber = PhysicianLicenseNum ?? string.Empty, GraduationDate = PhysicianGradDate, Specialization = PhysicianSpecial ?? string.Empty};
+                            var newPhysician = new Physician { Name = PhysicianName ?? string.Empty, LicenseNumber = PhysicianLicenseNum ?? string.Empty, GraduationDate = PhysicianGradDate, Specialization = PhysicianSpecial ?? string.Empty };
                             PhysicianServiceProxy.Current.AddPhysician(newPhysician);
                             break;
 
@@ -108,6 +109,13 @@ namespace MyApp
                             {
                                 Console.WriteLine($"{appointment}");
                             }
+                            break;
+
+                        case 'g':
+                        case 'G':
+                            PatientServiceProxy.Current.Patients.ForEach(x => Console.WriteLine($"{x.Id}. {x.Name}"));
+                            int selectedPatient = int.Parse(Console.ReadLine() ?? "-1");
+                            PatientServiceProxy.Current.DeletePatient(selectedPatient);
                             break;
 
                         case 'q':

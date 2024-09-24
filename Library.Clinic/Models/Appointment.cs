@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Library.Clinic.Models
 {
     public class Appointment
     {
+        public override string ToString() //Need this to print the actual names and not the fully qualified assembly name
+        {
+            return $"[{Id}] {PatientId} {PhysicianId} {Start} {End}";
+            //return "Patient " + PatientId + " has an appointment with " + PhysicianId + " at " + Start + " to " + End;
+        }
         public int Id { get; set; }  //in every models to grab one and only one object of that type (in this case patient)
                                      //Guid puts in a hash function, don't have to check for collisons, easier to troubleshoot with in ID's 
         /*private string? name;  //field, data member 
@@ -30,10 +36,7 @@ namespace Library.Clinic.Models
         public int PhysicianId { get; set; }
    
 
-        public override string ToString() //Need this to print the actual names and not the fully qualified assembly name
-        {
-            return "Patient " + PatientId + " has an appointment with " + PhysicianId + " at " + Start + " to " + End;
-        }
+        
 
         public Appointment()
         {

@@ -5,6 +5,7 @@
              Title="PatientView"
              NavigatedTo="PatientView_NavigatedTo"
              >
+    
 
     <VerticalStackLayout>
         <Grid>

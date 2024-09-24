@@ -84,7 +84,7 @@ namespace MyApp
                             DateTime.TryParse(Console.ReadLine(), out AppStart);
                             DateTime AppEnd = AppStart.AddHours(1);
                             var newAppointment = new Appointment { Start = AppStart, End = AppEnd, PatientId = PatientServiceProxy.Current.GetPatient(PatName), PhysicianId = PhysicianServiceProxy.Current.GetPhysician(PhName) };
-                            AppointmentServiceProxy.Current.AddAppointment(newAppointment);
+                            AppointmentServiceProxy.Current.AddOrUpdateAppointment(newAppointment);
                             break;
 
                         case 'd':

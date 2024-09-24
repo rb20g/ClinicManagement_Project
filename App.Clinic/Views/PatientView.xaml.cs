@@ -1,6 +1,7 @@
 using Library.Clinic.Models;
 using Library.Clinic.Services;
 using App.Clinic.ViewModels;
+using System.Globalization;
 
 namespace App.Clinic.Views;
 
@@ -10,6 +11,7 @@ public partial class PatientView : ContentPage
 	public PatientView()
 	{
         InitializeComponent();
+		//this.BindingContext = new PatientManagementViewModel();
         //BindingContext = new PatientManagementViewModel();
     }
 
@@ -44,4 +46,5 @@ public partial class PatientView : ContentPage
 			BindingContext = new Patient();
 		}
 	}
+  
 }

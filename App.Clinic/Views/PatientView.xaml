@@ -9,6 +9,7 @@
     <VerticalStackLayout>
         <Grid>
             <Grid.ColumnDefinitions>
+       
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />

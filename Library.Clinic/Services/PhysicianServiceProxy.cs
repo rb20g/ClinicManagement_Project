@@ -79,7 +79,7 @@ namespace Library.Clinic.Services
 
         }
 
-        public void DeletePatient(int id)
+        public void DeletePhysician(int id)
         {
             var physicianToRemove = Physicians.FirstOrDefault(p => p.Id == id);
             if (physicianToRemove != null)

@@ -9,6 +9,11 @@ namespace Library.Clinic.Models
 {
     public class Patient    //this is a data class
     {
+        public override string ToString() //Need this to print the actual names and not the fully qualified assembly name
+        {
+            return $"[{Id}] {Name} {Address} {Birthday} {Race} {Gender} {MedicalNotes}";
+            //return Name + " " + Address + " " + Birthday + " " + Race + " " + Gender + " " + MedicalNotes;
+        }
         public int Id { get; set; }  //in every models to grab one and only one object of that type (in this case patient)
         //Guid puts in a hash function, don't have to check for collisons, easier to troubleshoot with in ID's 
         private string? name;  //field, data member 
@@ -30,11 +35,7 @@ namespace Library.Clinic.Models
         public string Gender { get; set; }
         public string MedicalNotes { get; set; }
 
-        public override string ToString() //Need this to print the actual names and not the fully qualified assembly name
-        {
-            //List<Patient> total = new List<Patient>(Name, Address, Birthday, Race, Gender);
-            return Name + " " + Address + " " + Birthday + " " + Race + " " + Gender + " " + MedicalNotes;
-        }
+       
 
         public Patient()
         {

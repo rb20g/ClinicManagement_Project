@@ -29,6 +29,11 @@ namespace Library.Clinic.Services
         private AppointmentServiceProxy()
         {
             instance = null;
+
+            Appointments = new List<Appointment>
+            {
+                new Appointment {Id = 1, PatientId = 1, PhysicianId = 1}
+            };
         }
         public int LastKey
         {
@@ -42,19 +47,39 @@ namespace Library.Clinic.Services
             }
         }
 
-        public List<Appointment> Appointments { get; private set; } = new List<Appointment>();
+        private List<Appointment> appointments;
+        public List<Appointment> Appointments
+        {
+            get
+            {
+                return appointments;
+            }
+            private set
+            {
+                if (appointments != value)
+                {
+                    appointments = value;
+                }
+            }
+        }
 
 
-        public void AddAppointment(Appointment appointment)  //Need to make into a model
+        public void AddOrUpdateAppointment(Appointment appointment)  //Need to make into a model
         {
             if (AppointmentAvailable(appointment))
             {
+                bool isAdd = false;
                 if (appointment.Id <= 0)
                 {
                     appointment.Id = LastKey + 1;              //if added the patient before, will add it again, but if never added patient before, the ID is always going to be 0, actually assign it a new 0 
+                    isAdd = true;
                 }
-                Appointments.Add(appointment);
-                Console.WriteLine("Appointment Successfully created");
+                if (isAdd)
+                {
+                    Appointments.Add(appointment);
+                }
+                
+                //Console.WriteLine("Appointment Successfully created");
             }
         }
 
@@ -97,6 +122,15 @@ namespace Library.Clinic.Services
             {
                 Console.WriteLine("There is no Physician/Patient with that name in our database");
                 return false;
+            }
+        }
+
+        public void DeleteAppointment(int id)
+        {
+            var appointmentToRemove = Appointments.FirstOrDefault(p => p.Id == id);
+            if (appointmentToRemove != null)
+            {
+                Appointments.Remove(appointmentToRemove);
             }
         }
        

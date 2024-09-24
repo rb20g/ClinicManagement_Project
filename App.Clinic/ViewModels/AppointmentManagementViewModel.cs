@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -12,43 +11,38 @@ using System.Threading.Tasks;
 
 namespace App.Clinic.ViewModels
 {
-    public class PatientManagementViewModel : INotifyPropertyChanged
+    public class AppointmentManagementViewModel : INotifyPropertyChanged
     {
-       
-
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public Patient? SelectedPatient { get; set; }
+        public Appointment? SelectedAppointment { get; set; }
 
-        public ObservableCollection<Patient> Patients
+        public ObservableCollection<Appointment> Appointments
         {
             get
             {
-                return new ObservableCollection<Patient>(PatientServiceProxy.Current.Patients);
+                return new ObservableCollection<Appointment>(AppointmentServiceProxy.Current.Appointments);
             }
         }
 
         public void Delete()
         {
-            if(SelectedPatient == null)
+            if (SelectedAppointment == null)
             {
                 return;
             }
-            PatientServiceProxy.Current.DeletePatient(SelectedPatient.Id);
+            AppointmentServiceProxy.Current.DeleteAppointment(SelectedAppointment.Id);
 
             Refresh();
         }
 
         public void Refresh()
         {
-            NotifyPropertyChanged(nameof(Patients));
+            NotifyPropertyChanged(nameof(Appointment));
         }
-       
-
     }
-
 }

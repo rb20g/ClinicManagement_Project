@@ -1,7 +1,6 @@
 ﻿using Library.Clinic.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +28,12 @@ namespace Library.Clinic.Services
         private PhysicianServiceProxy()
         {
             instance = null;
+
+            Physicians = new List<Physician>
+            {
+                new Physician{Id = 1, Name = "Robert Smith"}
+                , new Physician{Id = 2, Name = "Sponge Bob"}
+            };
         }
         public int LastKey
         {
@@ -41,17 +46,46 @@ namespace Library.Clinic.Services
                 return 0;
             }
         }
-        
-        public List<Physician> Physicians { get; private set; } = new List<Physician>();
 
-
-        public void AddPhysician(Physician physician) //responsible for constructing the list, but the application is responsible for constructing the individual objects 
+        private List<Physician> physicians;
+        public List<Physician> Physicians
         {
+            get
+            {
+                return physicians;
+            }
+            private set
+            {
+                if (physicians != value)
+                {
+                    physicians = value;
+                }
+            }
+        }
+
+
+        public void AddOrUpdatePhysician(Physician physician) //responsible for constructing the list, but the application is responsible for constructing the individual objects 
+        {
+            bool isAdd = false;
             if (physician.Id <= 0)
             {
-                physician.Id = LastKey + 1;               
+                physician.Id = LastKey + 1;
+                isAdd = true;
             }
-            Physicians.Add(physician);
+            if (isAdd)
+            {
+                Physicians.Add(physician);
+            }
+
+        }
+
+        public void DeletePatient(int id)
+        {
+            var physicianToRemove = Physicians.FirstOrDefault(p => p.Id == id);
+            if (physicianToRemove != null)
+            {
+                Physicians.Remove(physicianToRemove);
+            }
         }
 
         public int GetPhysician(string PhyName)
@@ -67,57 +101,6 @@ namespace Library.Clinic.Services
             return 0;
         }
 
-        /*
-        public void AddAppointment(Physician physician, DateTime appointment)  //Need to make into a model
-        {
-            if(AppointmentAvailable(physician, appointment))
-            {
-                for(int i = 0; i < Physicians.Count; i++)
-                {
-                    if (Physicians[i].Name == physician.Name)
-                    {
-                        Physicians[i].Appointment.Add(appointment);
-                        Console.WriteLine("Appointment successfully created");
-                    }
-                }
-                
-            }
-        }
-
-        public bool AppointmentAvailable(Physician physician, DateTime appointment)
-        {
-            TimeSpan EightAM = new TimeSpan(8, 0, 0);
-            TimeSpan FivePM = new TimeSpan(17, 0, 0);
-            for (int i = 0; i < Physicians.Count; i++)
-            {
-                if (Physicians[i].Name == physician.Name)
-                {
-                    if (Physicians[i].Appointment.Contains(appointment))
-                    {
-                        Console.WriteLine("Physican has an appointment at this time");
-                        return false;
-                    }
-                    else if(appointment.DayOfWeek == DayOfWeek.Saturday || appointment.DayOfWeek == DayOfWeek.Sunday)
-                    {
-                        Console.WriteLine("Physican is available for appointments Monday thru Friday");
-                        return false;
-                    }
-                    else if(appointment.TimeOfDay < EightAM || appointment.TimeOfDay >= FivePM)
-                    {
-                        Console.WriteLine("Physican is avaliable for appointments from 8:00 to 17:00");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-
-                }
-            }
-            Console.WriteLine("There is no physician with that name in our database");
-            return false;
-
-        }*/
     }
 }
 

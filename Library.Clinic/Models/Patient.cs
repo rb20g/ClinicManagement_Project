@@ -39,7 +39,7 @@ namespace Library.Clinic.Models
 
         public Patient()
         {
-            name = string.Empty;
+            Name = string.Empty;
             Address = string.Empty;
             Birthday = DateOnly.MinValue;
             Race = string.Empty;

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.Clinic.Views.PhysicianView"
+             Title="PhysicianView"
+             NavigatedTo="PhysicianView_NavigatedTo"
+             >
+
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="Name:"></Label>
+            <Entry Grid.Column="1" Text="{Binding Name}"/>
+            <Label Grid.Column="2" Text="License Number:"></Label>
+            <Entry Grid.Column="3" Text="{Binding LicenseNumber}"/>
+            <Label Grid.Column="4" Text="Graduation Date:"></Label>
+            <Entry Grid.Column="5" Text="{Binding GraduationDate}"/>
+            <Label Grid.Column="6" Text="Specialization:"></Label>
+            <Entry Grid.Column="7" Text="{Binding Specialization}"/>
+        </Grid>
+        <Button
+            Text="Ok"
+            Clicked="AddClicked"
+            />
+        <Button
+            Text="Cancel"
+            Clicked="CancelClicked"
+            />
+    </VerticalStackLayout>
+</ContentPage>

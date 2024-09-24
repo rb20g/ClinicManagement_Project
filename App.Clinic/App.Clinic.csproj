@@ -70,6 +70,16 @@
 		<MauiXaml Update="Views\PatientManagement.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\PhysicianManagement.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\PhysicianView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="PhysicianViews\" />
 	</ItemGroup>
 
 </Project>

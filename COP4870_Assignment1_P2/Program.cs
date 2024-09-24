@@ -68,7 +68,7 @@ namespace MyApp
                             Console.WriteLine("Physicians specialization: ");
                             var PhysicianSpecial = Console.ReadLine();
                             var newPhysician = new Physician { Name = PhysicianName ?? string.Empty, LicenseNumber = PhysicianLicenseNum ?? string.Empty, GraduationDate = PhysicianGradDate, Specialization = PhysicianSpecial ?? string.Empty };
-                            PhysicianServiceProxy.Current.AddPhysician(newPhysician);
+                            PhysicianServiceProxy.Current.AddOrUpdatePhysician(newPhysician);
                             break;
 
                         case 'c':

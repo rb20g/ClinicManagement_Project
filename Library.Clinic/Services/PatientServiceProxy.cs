@@ -86,7 +86,7 @@ namespace Library.Clinic.Services   //behavior role, where the behavior for the 
             }
             if (isAdd)
             {
-                patients.Add(patient);
+                Patients.Add(patient);
             }
         }
 

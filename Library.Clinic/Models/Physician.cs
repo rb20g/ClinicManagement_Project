@@ -36,7 +36,19 @@ namespace Library.Clinic.Models
         }
 
         public string LicenseNumber { get; set; }
-        public DateOnly GraduationDate { get; set; }
+        public string GraduationDateString
+        {
+            get
+            {
+                return GraduationDate.ToString();
+                
+            }
+            set
+            {
+                DateTime.Parse(GraduationDate.ToString()); 
+            }
+        }
+        public DateTime GraduationDate { get; set; }
         public string Specialization { get; set; }
 
      
@@ -45,7 +57,8 @@ namespace Library.Clinic.Models
         {
             Name = string.Empty;
             LicenseNumber = string.Empty;
-            GraduationDate = DateOnly.MinValue;
+            GraduationDate = DateTime.MinValue;
+            GraduationDateString = string.Empty;
             Specialization = string.Empty;
         }
         

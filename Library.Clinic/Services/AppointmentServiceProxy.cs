@@ -30,10 +30,7 @@ namespace Library.Clinic.Services
         {
             instance = null;
 
-            Appointments = new List<Appointment>
-            {
-                new Appointment {Id = 1, PatientId = 1, PhysicianId = 1}
-            };
+            Appointments = new List<Appointment>();
         }
         public int LastKey
         {
@@ -66,15 +63,15 @@ namespace Library.Clinic.Services
 
         public void AddOrUpdateAppointment(Appointment appointment)  //Need to make into a model
         {
-            if (AppointmentAvailable(appointment))
+            bool isAdd = false;
+            if (appointment.Id <= 0)
             {
-                bool isAdd = false;
-                if (appointment.Id <= 0)
+                if (AppointmentAvailable(appointment))
                 {
                     appointment.Id = LastKey + 1;              //if added the patient before, will add it again, but if never added patient before, the ID is always going to be 0, actually assign it a new 0 
                     isAdd = true;
                 }
-                if (isAdd)
+                if (AppointmentAvailable(appointment) && isAdd)
                 {
                     Appointments.Add(appointment);
                 }
@@ -95,24 +92,24 @@ namespace Library.Clinic.Services
                     {
                         if (DateTime.Compare(Appointments[i].Start, appointment.Start) <= 0 && DateTime.Compare(Appointments[i].End, appointment.Start) >= 0)
                         {
-                            Console.WriteLine("That Physican has an appointment at that time");
+                            //Console.WriteLine("That Physican has an appointment at that time");
                             return false;
                         }
                         else if(DateTime.Compare(Appointments[i].Start, appointment.End) <= 0 && DateTime.Compare(Appointments[i].End, appointment.End) >= 0)
                         {
-                            Console.WriteLine("That Physican has an appointment at that time");
+                            //Console.WriteLine("That Physican has an appointment at that time");
                             return false;
                         }
                             
                     }
                     else if(appointment.Start.DayOfWeek == DayOfWeek.Saturday || appointment.Start.DayOfWeek == DayOfWeek.Sunday)
                     {
-                        Console.WriteLine("Physican is not available for appointments on the weekend");
+                        //Console.WriteLine("Physican is not available for appointments on the weekend");
                         return false;
                     }
                     else if(appointment.Start.TimeOfDay < EightAM || appointment.Start.TimeOfDay >= FivePM)
                     {
-                        Console.WriteLine("Physican is avaliable for appointments from 8:00 to 17:00");
+                        //Console.WriteLine("Physican is avaliable for appointments from 8:00 to 17:00");
                         return false;
                     }
                 }
@@ -120,7 +117,7 @@ namespace Library.Clinic.Services
             }
             else 
             {
-                Console.WriteLine("There is no Physician/Patient with that name in our database");
+                //Console.WriteLine("There is no Physician/Patient with that name in our database");
                 return false;
             }
         }

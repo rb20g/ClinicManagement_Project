@@ -29,11 +29,7 @@ namespace Library.Clinic.Services
         {
             instance = null;
 
-            Physicians = new List<Physician>
-            {
-                new Physician{Id = 1, Name = "Robert Smith"}
-                , new Physician{Id = 2, Name = "Sponge Bob"}
-            };
+            Physicians = new List<Physician>();
         }
         public int LastKey
         {

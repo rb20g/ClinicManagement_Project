@@ -29,7 +29,19 @@ namespace Library.Clinic.Models
                 name = value;
             }
         }
-        public DateOnly Birthday { get; set; }
+        public String BirthdayString
+        {
+            get
+            {
+                return Birthday.ToString();
+            }
+
+            set
+            {
+                DateTime.Parse(Birthday.ToString());
+            }
+        }
+        public DateTime Birthday { get; set; }
         public string Address { get; set; }
         public string Race { get; set; }
         public string Gender { get; set; }
@@ -41,7 +53,8 @@ namespace Library.Clinic.Models
         {
             Name = string.Empty;
             Address = string.Empty;
-            Birthday = DateOnly.MinValue;
+            BirthdayString = string.Empty;
+            Birthday = DateTime.MinValue;
             Race = string.Empty;
             Gender = string.Empty;
             MedicalNotes = string.Empty;

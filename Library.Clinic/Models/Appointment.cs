@@ -31,7 +31,29 @@ namespace Library.Clinic.Models
         }*/
 
         public DateTime Start {  get; set; }
+        public string StartString
+        {
+            get
+            {
+                return Start.ToString() ;
+            }
+            set
+            {
+                DateTime.Parse(Start.ToString());
+            }
+        }
         public DateTime End { get; set; }
+        public string EndString
+        {
+            get
+            {
+                return End.ToString();
+            }
+            set
+            {
+                DateTime.Parse(End.ToString());
+            }
+        }
         public int PatientId { get; set; }
         public int PhysicianId { get; set; }
    
@@ -41,7 +63,9 @@ namespace Library.Clinic.Models
         public Appointment()
         {
             Start = DateTime.MinValue;
+            StartString = string.Empty;
             End = DateTime.MinValue;
+            EndString = string.Empty;   
             PatientId = 0;
             PhysicianId = 0;
         }

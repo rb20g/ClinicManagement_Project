@@ -2,7 +2,8 @@ using Library.Clinic.Models;
 using Library.Clinic.Services;
 using App.Clinic.ViewModels;
 using System.Globalization;
-
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using System.Reflection;
 namespace App.Clinic.Views;
 
 [QueryProperty(nameof(PatientId), "patientId")]

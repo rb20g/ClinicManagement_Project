@@ -42,8 +42,8 @@ namespace MyApp
                             Console.WriteLine("Patients address: ");
                             var PatientAddress = Console.ReadLine();
                             Console.WriteLine("Patients birth date as MM/DD/YYYY: ");
-                            DateOnly PatientBirthday;
-                            DateOnly.TryParse(Console.ReadLine(), out PatientBirthday);
+                            DateTime PatientBirthday;
+                            DateTime.TryParse(Console.ReadLine(), out PatientBirthday);
                             //DateOnly.TryParseExact(Console.ReadLine(), "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out PatientBirthday);
                             Console.WriteLine("Patients race: ");
                             var PatientRace = Console.ReadLine();
@@ -62,8 +62,8 @@ namespace MyApp
                             Console.WriteLine("Physicians license number: ");
                             var PhysicianLicenseNum = Console.ReadLine();
                             Console.WriteLine("Physicians graduation date as MM/DD/YYYY: ");
-                            DateOnly PhysicianGradDate;
-                            DateOnly.TryParse(Console.ReadLine(), out PhysicianGradDate);
+                            DateTime PhysicianGradDate;
+                            DateTime.TryParse(Console.ReadLine(), out PhysicianGradDate);
                             //DateOnly.TryParseExact(Console.ReadLine(), "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out PhysicianGradDate);
                             Console.WriteLine("Physicians specialization: ");
                             var PhysicianSpecial = Console.ReadLine();

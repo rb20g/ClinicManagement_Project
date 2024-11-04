@@ -29,7 +29,7 @@
             <Label Grid.Column="2" Text="Address:"></Label>
             <Entry Grid.Column="3" Text="{Binding Address}"/>
             <Label Grid.Column="4" Text="Birthday:"></Label>
-            <Entry Grid.Column="5" Text="{Binding Birthday}"/>
+            <DatePicker Grid.Column="5" Date="{Binding Birthday}" MinimumDate="{Binding MinStartDate}"/>
             <Label Grid.Column="6" Text="Race:"></Label>
             <Entry Grid.Column="7" Text="{Binding Race}"/>
             <Label Grid.Column="8" Text="Gender:"></Label>

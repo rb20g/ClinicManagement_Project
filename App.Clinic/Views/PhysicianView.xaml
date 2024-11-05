@@ -23,7 +23,7 @@
             <Label Grid.Column="2" Text="License Number:"></Label>
             <Entry Grid.Column="3" Text="{Binding LicenseNumber}"/>
             <Label Grid.Column="4" Text="Graduation Date:"></Label>
-            <Entry Grid.Column="5" Text="{Binding GraduationDate}"/>
+            <DatePicker Grid.Column="5" Date="{Binding GraduationDate}" MinimumDate="{Binding MinStartDate}"/>
             <Label Grid.Column="6" Text="Specialization:"></Label>
             <Entry Grid.Column="7" Text="{Binding Specialization}"/>
         </Grid>

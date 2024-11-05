@@ -37,4 +37,9 @@ public partial class PhysicianManagement : ContentPage, INotifyPropertyChanged
     {
         (BindingContext as PhysicianManagementViewModel)?.Refresh();
     }
+
+    private void RefreshClicked(object sender, EventArgs e)
+    {
+        (BindingContext as PhysicianManagementViewModel)?.Refresh();
+    }
 }

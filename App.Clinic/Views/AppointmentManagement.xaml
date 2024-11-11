@@ -8,12 +8,15 @@
     <VerticalStackLayout>
         <ListView
             ItemsSource="{Binding Appointments}"
+            SelectedItem="{Binding SelectedAppointment}"
             >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
@@ -50,7 +53,7 @@
                                 <Label Grid.Column="0"
                                     Text="Appointment Start:"/>
                                 <Label Grid.Column="1"
-                                    Text="{Binding StartTime}"/>
+                                    Text="{Binding StartDate}"/>
                             </Grid>
                             <Grid Grid.Column="3">
                                 <!-- End Time Display-->
@@ -61,20 +64,18 @@
                                 <Label Grid.Column="0"
                                     Text="Appointment End:"/>
                                 <Label Grid.Column="1"
-                                    Text="{Binding EndTime}"/>
+                                    Text="{Binding EndDate}"/>
                             </Grid>
                             <Button Grid.Column="4" Text="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
                             <Button Grid.Column="5" Text="Delete" Command="{Binding DeleteCommand}" Clicked="RefreshClicked"/>
 
 
-                        </Grid>
+                            </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <Button Text="Schedule Appointment" Clicked="AddClicked"/>
         <Button Text="Cancel" Clicked="CancelClicked"/>
-        <Button Text="Edit Appointment" Clicked="EditClicked"/>
-        <Button Text="Delete Appointment" Clicked="DeleteClicked"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -141,23 +141,19 @@ namespace App.Clinic.ViewModels
         {
             if (Model != null)
             {
-                
+                /*
                 if(Model.StartTime.HasValue)
                 {
                     Model.StartTime = StartDate.Date + StartTime;
                     Model.EndTime = Model.StartTime.Value.AddHours(1);
-                }
-                /*
+                }*/
+               
                 if (Model.StartTime != null)
                 {
                     Model.StartTime = StartDate;
                     Model.StartTime = Model.StartTime.Value.AddHours(StartTime.Hours);
+                    Model.EndTime = Model.StartTime.Value.AddHours(1);
                 }
-                if (Model.EndTime != null)
-                {
-                    Model.EndTime = EndDate;
-                    Model.EndTime = Model.EndTime.Value.AddHours(EndTime.Hours);   
-                }*/
             }
         }
 
@@ -202,10 +198,12 @@ namespace App.Clinic.ViewModels
         public AppointmentViewModel()
         {
             Model = new Appointment();
+            SetupCommands();
         }
-        public AppointmentViewModel(Appointment a)
+        public AppointmentViewModel(Appointment? a)
         {
             Model = a;
+            SetupCommands();
         }
 
         public void SetupCommands()
@@ -216,7 +214,9 @@ namespace App.Clinic.ViewModels
         public void DoDelete()
         {
             if (Id > 0)
+            {
                 AppointmentServiceProxy.Current.DeleteAppointment(Id);
+            }
             Shell.Current.GoToAsync("//Appointments");
         }
 
@@ -230,7 +230,7 @@ namespace App.Clinic.ViewModels
             Shell.Current.GoToAsync($"//AppointmentDetails?appointmentId={selectedAppointmentId}");
         }
 
-        public void AddOrUpdate()
+        public void ExecuteAdd()
         {
             if (Model != null)
             {

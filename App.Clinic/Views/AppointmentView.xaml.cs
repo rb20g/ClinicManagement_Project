@@ -22,7 +22,7 @@ public partial class AppointmentView : ContentPage
 	
 	private void AddClicked(object sender, EventArgs e)
 	{
-		(BindingContext as AppointmentViewModel)?.AddOrUpdate();
+		(BindingContext as AppointmentViewModel)?.ExecuteAdd();
 		/*
 		var appointmentToAdd = BindingContext as Appointment;
 		if (appointmentToAdd != null)
@@ -43,8 +43,16 @@ public partial class AppointmentView : ContentPage
 	{
 		if(AppointmentId > 0)
 		{
-			BindingContext = AppointmentServiceProxy.Current
+			var model = AppointmentServiceProxy.Current
 				.Appointments.FirstOrDefault(p => p.Id == AppointmentId);
+			if (model != null)
+			{
+				BindingContext = new AppointmentViewModel(model);
+			}
+			else
+			{
+				BindingContext = new AppointmentViewModel(); 
+			}
 		}
 		else
 		{

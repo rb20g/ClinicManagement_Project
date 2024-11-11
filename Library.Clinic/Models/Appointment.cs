@@ -12,7 +12,7 @@ namespace Library.Clinic.Models
         public Appointment() { }
         public override string ToString() //Need this to print the actual names and not the fully qualified assembly name
         {
-            return $"[{Id}] {PatientId} {PhysicianId} {StartTime} {EndTime}";
+            return $"[{Id}] {Patient} {Physician} {StartTime} {EndTime}";
             //return "Patient " + PatientId + " has an appointment with " + PhysicianId + " at " + Start + " to " + End;
         }
         public int Id { get; set; }  //in every models to grab one and only one object of that type (in this case patient)

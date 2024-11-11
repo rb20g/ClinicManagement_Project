@@ -10,7 +10,6 @@ public partial class PhysicianView : ContentPage
     public PhysicianView()
     {
         InitializeComponent();
-        BindingContext = new PhysicianManagementViewModel();
     }
 
     public int PhysicianId { get; set; }
@@ -22,26 +21,29 @@ public partial class PhysicianView : ContentPage
 
     private void AddClicked(object sender, EventArgs e)
     {
-        var physicianToAdd = BindingContext as Physician;
-        if (physicianToAdd != null)
-        {
-            PhysicianServiceProxy
-                .Current
-                .AddOrUpdatePhysician(physicianToAdd);
-        }
-        Shell.Current.GoToAsync("//Physicians");
+        (BindingContext as PhysicianViewModel)?.ExecuteAdd();
     }
 
     private void PhysicianView_NavigatedTo(object sender, NavigatedToEventArgs e)
     {
         if (PhysicianId > 0)
         {
-            BindingContext = PhysicianServiceProxy.Current
+            var model = PhysicianServiceProxy.Current
                 .Physicians.FirstOrDefault(p => p.Id == PhysicianId);
+        
+            if (model != null)
+            {
+                BindingContext = new PhysicianViewModel(model);
+            }
+            else
+            {
+                BindingContext = new PhysicianViewModel();
+            }
         }
+
         else
         {
-            BindingContext = new Physician();
+            BindingContext = new PhysicianViewModel();
         }
     }
 }

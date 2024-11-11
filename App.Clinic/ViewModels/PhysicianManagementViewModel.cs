@@ -19,13 +19,25 @@ namespace App.Clinic.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public Physician? SelectedPhysician { get; set; }
+        public PhysicianViewModel? SelectedPhysician { get; set; }
 
-        public ObservableCollection<Physician> Physicians
+        public string? Query { get; set; }
+
+        public ObservableCollection<PhysicianViewModel> Physicians
         {
             get
             {
-                return new ObservableCollection<Physician>(PhysicianServiceProxy.Current.Physicians);
+                var retVal = new ObservableCollection<PhysicianViewModel>(
+                    PhysicianServiceProxy
+                    .Current
+                    .Physicians
+                    .Where(p => p != null)
+                    .Where(p => p.Name.ToUpper().Contains(Query?.ToUpper() ?? string.Empty))
+                    .Take(100)
+                    .Select(p => new PhysicianViewModel(p))
+                    );
+
+                return retVal;
             }
         }
 
@@ -35,7 +47,7 @@ namespace App.Clinic.ViewModels
             {
                 return;
             }
-            PhysicianServiceProxy.Current.DeletePhysician(SelectedPhysician.Id);
+            PhysicianServiceProxy.Current.DeletePhysician(SelectedPhysician.Model.Id);
 
             Refresh();
         }

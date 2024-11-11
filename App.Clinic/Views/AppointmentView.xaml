@@ -3,37 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App.Clinic.Views.AppointmentView"
              Title="AppointmentView"
-             NavigatedTo="AppointmentView_NavigatedTo"
-             >
-
+             NavigatedTo="AppointmentView_NavigatedTo">
     <VerticalStackLayout>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Text="Start Time of Appointment:"></Label>
-            <Entry Grid.Column="1" Text="{Binding Start}"/>
-            <Label Grid.Column="2" Text="End Time of Appointment:"></Label>
-            <Entry Grid.Column="3" Text="{Binding End}"/>
-            <Label Grid.Column="4" Text="Patient ID:"></Label>
-            <Entry Grid.Column="5" Text="{Binding PatientId}"/>
-            <Label Grid.Column="6" Text="Physician ID:"></Label>
-            <Entry Grid.Column="7" Text="{Binding PhysicianId}"/>
-        </Grid>
-        <Button
-            Text="Ok"
-            Clicked="AddClicked"
+        <Label Text="Patient"/>
+        <Picker
+            ItemsSource="{Binding Patients}"
+            SelectedItem="{Binding SelectedPatient}"
             />
-        <Button
-            Text="Cancel"
-            Clicked="CancelClicked"
+        <Picker
+            ItemsSource="{Binding Physicians}"
+            SelectedItem="{Binding SelectedPhysician}"
             />
+        <Label Text="Appointment Start"/>
+        <DatePicker Date="{Binding StartDate}" MinimumDate="{Binding MinStartDate}"/>
+        <TimePicker Time="{Binding StartTime}" PropertyChanged="TimePicker_PropertyChanged"/>
+        <Button Text="Ok" Clicked="AddClicked"/>
+        <Button Text="Cancel" Clicked="CancelClicked"/>
     </VerticalStackLayout>
 </ContentPage>

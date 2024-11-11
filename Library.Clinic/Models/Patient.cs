@@ -14,6 +14,14 @@ namespace Library.Clinic.Models
             return $"[{Id}] {Name} {Address} {Birthday} {Race} {Gender} {MedicalNotes}";
             //return Name + " " + Address + " " + Birthday + " " + Race + " " + Gender + " " + MedicalNotes;
         }
+        public string Display
+        {
+            get
+            {
+                return $"[{Id}] {Name} {Address} {Birthday} {Race} {Gender} {MedicalNotes}";
+            }
+        }
+
         public int Id { get; set; }  //in every models to grab one and only one object of that type (in this case patient)
         //Guid puts in a hash function, don't have to check for collisons, easier to troubleshoot with in ID's 
         private string? name;  //field, data member 
@@ -29,6 +37,7 @@ namespace Library.Clinic.Models
                 name = value;
             }
         }
+        /*
         public String BirthdayString
         {
             get
@@ -40,7 +49,7 @@ namespace Library.Clinic.Models
             {
                 DateTime.Parse(Birthday.ToString());
             }
-        }
+        }*/
         public DateTime Birthday { get; set; }
         public string Address { get; set; }
         public string Race { get; set; }
@@ -53,7 +62,6 @@ namespace Library.Clinic.Models
         {
             Name = string.Empty;
             Address = string.Empty;
-            BirthdayString = string.Empty;
             Birthday = DateTime.MinValue;
             Race = string.Empty;
             Gender = string.Empty;

@@ -5,13 +5,49 @@
              Title="PatientManagement"
              NavigatedTo="PatientManagement_NavigatedTo"
              >
+
     <VerticalStackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="12*" />
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Entry Grid.Column="0" Text='{Binding Query}'/>
+            <Button Grid.Column="1" Text="Search" Clicked="RefreshClicked"/>
+        </Grid>
         <ListView
             ItemsSource="{Binding Patients}"
             SelectedItem="{Binding SelectedPatient}"
             >
-            
-        </ListView>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label FontAttributes="Bold" Grid.Column="0" Text="{Binding Id}"/>
+                            <Label Grid.Column="1" Text="{Binding Name}"/>
+                            <Label Grid.Column="2" Text="{Binding Address}"/>
+                            <Label Grid.Column="3" Text="{Binding Birthday}"/>
+                            <Label Grid.Column="4" Text="{Binding Race}"/>
+                            <Label Grid.Column="5" Text="{Binding Gender}"/>
+                            <Label Grid.Column="6" Text="{Binding MedicalNotes}"/>
+                            <Button Grid.Column="7" Text="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
+                            <Button Grid.Column="8" Text="Delete" Command="{Binding DeleteCommand}" Clicked="RefreshClicked"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView> 
         <Button Text="Add" Clicked="AddClicked"/>
         <Button Text="Edit" Clicked="EditClicked"/>
         <Button Text="Delete" Clicked="DeleteClicked"/>

@@ -18,7 +18,7 @@ public partial class AppointmentManagement : ContentPage, INotifyPropertyChanged
 
     private void AddClicked(object sender, EventArgs e)
     {
-        Shell.Current.GoToAsync("//AppointmentDetails?appointmentId=0");
+        Shell.Current.GoToAsync("//AppointmentDetails");
     }
 
     private void EditClicked(object sender, EventArgs e)
@@ -31,6 +31,11 @@ public partial class AppointmentManagement : ContentPage, INotifyPropertyChanged
     private void DeleteClicked(object sender, EventArgs e)
     {
         (BindingContext as AppointmentManagementViewModel)?.Delete();
+    }
+
+    private void RefreshClicked(object sender, EventArgs e)
+    {
+        (BindingContext as AppointmentManagementViewModel)?.Refresh();
     }
 
     private void AppointmentManagement_NavigatedTo(object sender, NavigatedToEventArgs e)

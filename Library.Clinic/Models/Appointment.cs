@@ -9,57 +9,25 @@ namespace Library.Clinic.Models
 {
     public class Appointment
     {
+        public Appointment() { }
         public override string ToString() //Need this to print the actual names and not the fully qualified assembly name
         {
-            return $"[{Id}] {PatientId} {PhysicianId} {Start} {End}";
+            return $"[{Id}] {PatientId} {PhysicianId} {StartTime} {EndTime}";
             //return "Patient " + PatientId + " has an appointment with " + PhysicianId + " at " + Start + " to " + End;
         }
         public int Id { get; set; }  //in every models to grab one and only one object of that type (in this case patient)
                                      //Guid puts in a hash function, don't have to check for collisons, easier to troubleshoot with in ID's 
-        /*private string? name;  //field, data member 
-        public string Name
-        {
-            get
-            {
-                return name ?? string.Empty;
-            }
 
-            set
-            {
-                name = value;
-            }
-        }*/
-
-        public DateTime Start {  get; set; }
-        public string StartString
-        {
-            get
-            {
-                return Start.ToString() ;
-            }
-            set
-            {
-                DateTime.Parse(Start.ToString());
-            }
-        }
-        public DateTime End { get; set; }
-        public string EndString
-        {
-            get
-            {
-                return End.ToString();
-            }
-            set
-            {
-                DateTime.Parse(End.ToString());
-            }
-        }
+        public DateTime? StartTime {  get; set; }
+        public DateTime? EndTime { get; set; }
         public int PatientId { get; set; }
+        public Patient? Patient { get; set; }
         public int PhysicianId { get; set; }
+        public Physician? Physician { get; set; }
    
 
         
-
+        /*
         public Appointment()
         {
             Start = DateTime.MinValue;
@@ -68,7 +36,7 @@ namespace Library.Clinic.Models
             EndString = string.Empty;   
             PatientId = 0;
             PhysicianId = 0;
-        }
+        }*/
 
     }
 }

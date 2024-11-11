@@ -1,7 +1,6 @@
 ﻿using Library.Clinic.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,28 +10,7 @@ namespace Library.Clinic.Services
     public class AppointmentServiceProxy
     {
         private static object _lock = new object();
-        public static AppointmentServiceProxy Current
-        {
-            get
-            {
-                lock (_lock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new AppointmentServiceProxy();
-                    }
-                }
-                return instance;
-            }
-        }
-        private static AppointmentServiceProxy? instance;
-        private AppointmentServiceProxy()
-        {
-            instance = null;
-
-            Appointments = new List<Appointment>();
-        }
-        public int LastKey
+        private int lastKey
         {
             get
             {
@@ -43,83 +21,97 @@ namespace Library.Clinic.Services
                 return 0;
             }
         }
+        public List<Appointment> Appointments { get; private set; }
 
-        private List<Appointment> appointments;
-        public List<Appointment> Appointments
+        private static AppointmentServiceProxy _instance;
+        public static AppointmentServiceProxy Current
         {
             get
             {
-                return appointments;
-            }
-            private set
-            {
-                if (appointments != value)
+
+                lock (_lock)
                 {
-                    appointments = value;
+                    if (_instance == null)
+                    {
+                        _instance = new AppointmentServiceProxy();
+                    }
                 }
+                return _instance;
             }
         }
 
-
-        public void AddOrUpdateAppointment(Appointment appointment)  //Need to make into a model
+        private AppointmentServiceProxy()
         {
-            bool isAdd = false;
-            if (appointment.Id <= 0)
+            Appointments = new List<Appointment> {
+                new Appointment {Id = 1
+                , StartTime = new DateTime(2024, 10, 9)
+                , EndTime = new DateTime(2024, 10, 9)
+                , PatientId = 1}
+            };
+        }
+
+        public void AddOrUpdateAppointment(Appointment a)
+        {
+            var isAdd = false;
+            if (a.Id <= 0)
             {
-                if (AppointmentAvailable(appointment))
+                if(AppointmentAvailable(a))
                 {
-                    appointment.Id = LastKey + 1;              //if added the patient before, will add it again, but if never added patient before, the ID is always going to be 0, actually assign it a new 0 
+                    a.Id = lastKey + 1;
                     isAdd = true;
                 }
-                if (AppointmentAvailable(appointment) && isAdd)
-                {
-                    Appointments.Add(appointment);
-                }
-                
-                //Console.WriteLine("Appointment Successfully created");
             }
+            if (isAdd)
+            {
+                Appointments.Add(a);
+            }
+
         }
 
         public bool AppointmentAvailable(Appointment appointment)
         {
             TimeSpan EightAM = new TimeSpan(8, 0, 0);
             TimeSpan FivePM = new TimeSpan(17, 0, 0);
-            if(appointment.PatientId > 0 && appointment.PhysicianId > 0)
+
+            if (appointment.PatientId > 0 && appointment.PhysicianId > 0 && appointment.StartTime.HasValue && appointment.EndTime.HasValue)
             {
-                for(int i = 0; i < Appointments.Count; i++)
+                DateTime appointmentStart = appointment.StartTime.Value;
+                DateTime appointmentEnd = appointment.EndTime.Value;
+
+                // Check if appointment is on a weekend
+                if (appointmentStart.DayOfWeek == DayOfWeek.Saturday || appointmentStart.DayOfWeek == DayOfWeek.Sunday)
                 {
-                    if (Appointments[i].PhysicianId == appointment.PhysicianId && appointment.Start.Date == Appointments[i].Start.Date) 
+                    return false;
+                }
+
+                // Check if appointment is within working hours
+                if (appointmentStart.TimeOfDay < EightAM || appointmentEnd.TimeOfDay > FivePM)
+                {
+                    return false;
+                }
+
+                foreach (var existingAppointment in Appointments)
+                {
+                    // Ensure the physician and date match
+                    if (existingAppointment.PhysicianId == appointment.PhysicianId &&
+                        existingAppointment.StartTime?.Date == appointmentStart.Date)
                     {
-                        if (DateTime.Compare(Appointments[i].Start, appointment.Start) <= 0 && DateTime.Compare(Appointments[i].End, appointment.Start) >= 0)
+                        DateTime existingStart = existingAppointment.StartTime.Value;
+                        DateTime existingEnd = existingAppointment.EndTime.Value;
+
+                        // Check if there is an overlap with another appointment
+                        if ((appointmentStart >= existingStart && appointmentStart < existingEnd) ||
+                            (appointmentEnd > existingStart && appointmentEnd <= existingEnd))
                         {
-                            //Console.WriteLine("That Physican has an appointment at that time");
                             return false;
                         }
-                        else if(DateTime.Compare(Appointments[i].Start, appointment.End) <= 0 && DateTime.Compare(Appointments[i].End, appointment.End) >= 0)
-                        {
-                            //Console.WriteLine("That Physican has an appointment at that time");
-                            return false;
-                        }
-                            
-                    }
-                    else if(appointment.Start.DayOfWeek == DayOfWeek.Saturday || appointment.Start.DayOfWeek == DayOfWeek.Sunday)
-                    {
-                        //Console.WriteLine("Physican is not available for appointments on the weekend");
-                        return false;
-                    }
-                    else if(appointment.Start.TimeOfDay < EightAM || appointment.Start.TimeOfDay >= FivePM)
-                    {
-                        //Console.WriteLine("Physican is avaliable for appointments from 8:00 to 17:00");
-                        return false;
                     }
                 }
+
                 return true;
             }
-            else 
-            {
-                //Console.WriteLine("There is no Physician/Patient with that name in our database");
-                return false;
-            }
+
+            return false;
         }
 
         public void DeleteAppointment(int id)
@@ -130,6 +122,49 @@ namespace Library.Clinic.Services
                 Appointments.Remove(appointmentToRemove);
             }
         }
-       
+
     }
 }
+
+/*
+TimeSpan EightAM = new TimeSpan(8, 0, 0);
+TimeSpan FivePM = new TimeSpan(17, 0, 0);
+if(appointment.PatientId > 0 && appointment.PhysicianId > 0)
+{
+    for(int i = 0; i < Appointments.Count; i++)
+    {
+        if (Appointments[i].PhysicianId == appointment.PhysicianId && appointment.StartTime?.Date == Appointments[i].StartTime?.Date) 
+        {
+            if (DateTime.Compare(Appointments[i].StartTime, appointment.StartTime) <= 0 && DateTime.Compare(Appointments[i].EndTime, appointment.StartTime) >= 0)
+            {
+                //Console.WriteLine("That Physican has an appointment at that time");
+                return false;
+            }
+            else if(DateTime.Compare(Appointments[i].StartTime, appointment.EndTime) <= 0 && DateTime.Compare(Appointments[i].EndTime, appointment.EndTime) >= 0)
+            {
+                //Console.WriteLine("That Physican has an appointment at that time");
+                return false;
+            }
+
+        }
+        else if(appointment.StartTime.DayOfWeek == DayOfWeek.Saturday || appointment.StartTime.DayOfWeek == DayOfWeek.Sunday)
+        {
+            //Console.WriteLine("Physican is not available for appointments on the weekend");
+            return false;
+        }
+        else if(appointment.StartTime.TimeOfDay < EightAM || appointment.StartTime.TimeOfDay >= FivePM)
+        {
+            //Console.WriteLine("Physican is avaliable for appointments from 8:00 to 17:00");
+            return false;
+        }
+    }
+    return true;
+}
+else 
+{
+    //Console.WriteLine("There is no Physician/Patient with that name in our database");
+    return false;
+}
+}*/
+
+

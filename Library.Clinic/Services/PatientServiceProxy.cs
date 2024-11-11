@@ -35,11 +35,11 @@ namespace Library.Clinic.Services   //behavior role, where the behavior for the 
         {
             instance = null;
 
-            Patients = new List<Patient>();
-            /*{
+            Patients = new List<Patient>()
+            {
                 new Patient{Id = 1, Name = "John Doe"}
                 , new Patient{Id = 2, Name = "Jane Doe"}
-            };*/
+            };
         }
         public int LastKey
         {

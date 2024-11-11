@@ -10,7 +10,7 @@ public partial class AppointmentView : ContentPage
 	public AppointmentView()
 	{
         InitializeComponent();
-        //BindingContext = new PatientManagementViewModel();
+        BindingContext = new AppointmentViewModel();
     }
 
 	public int AppointmentId { get; set; }
@@ -19,9 +19,11 @@ public partial class AppointmentView : ContentPage
 	{
 		Shell.Current.GoToAsync("//Appointments");
 	}
-
+	
 	private void AddClicked(object sender, EventArgs e)
 	{
+		(BindingContext as AppointmentViewModel)?.AddOrUpdate();
+		/*
 		var appointmentToAdd = BindingContext as Appointment;
 		if (appointmentToAdd != null)
 		{
@@ -29,10 +31,15 @@ public partial class AppointmentView : ContentPage
 				.Current
 				.AddOrUpdateAppointment(appointmentToAdd);
 		}
-		Shell.Current.GoToAsync("//Appointments");
+		Shell.Current.GoToAsync("//Appointments");*/
 	}
 
-	private void AppointmentView_NavigatedTo(object sender, NavigatedToEventArgs e)
+    private void TimePicker_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        (BindingContext as AppointmentViewModel)?.RefreshTime();
+    }
+
+    private void AppointmentView_NavigatedTo(object sender, NavigatedToEventArgs e)
 	{
 		if(AppointmentId > 0)
 		{
@@ -41,7 +48,7 @@ public partial class AppointmentView : ContentPage
 		}
 		else
 		{
-			BindingContext = new Appointment();
+			BindingContext = new AppointmentViewModel();
 		}
 	}
 }

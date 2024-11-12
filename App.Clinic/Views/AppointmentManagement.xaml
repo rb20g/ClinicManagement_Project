@@ -21,6 +21,7 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <!-- Patient Display-->
@@ -45,29 +46,40 @@
                                     Text="{Binding PhysicianName}"/>
                             </Grid>
                             <Grid Grid.Column="2">
+                                <!-- Treatment Display-->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0"
+                                    Text="Treatment:"/>
+                                <Label Grid.Column="1"
+                                    Text="{Binding TreatmentName}"/>
+                            </Grid>
+                            <Grid Grid.Column="3">
                                 <!-- Start Time Display-->
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0"
-                                    Text="Appointment Start:"/>
+                                    Text="Start Time:"/>
                                 <Label Grid.Column="1"
                                     Text="{Binding StartDate}"/>
                             </Grid>
-                            <Grid Grid.Column="3">
+                            <Grid Grid.Column="4">
                                 <!-- End Time Display-->
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0"
-                                    Text="Appointment End:"/>
+                                    Text="End Time:"/>
                                 <Label Grid.Column="1"
                                     Text="{Binding EndDate}"/>
                             </Grid>
-                            <Button Grid.Column="4" Text="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
-                            <Button Grid.Column="5" Text="Delete" Command="{Binding DeleteCommand}" Clicked="RefreshClicked"/>
+                            <Button Grid.Column="5" Text="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
+                            <Button Grid.Column="6" Text="Delete" Command="{Binding DeleteCommand}" Clicked="RefreshClicked"/>
 
 
                             </Grid>

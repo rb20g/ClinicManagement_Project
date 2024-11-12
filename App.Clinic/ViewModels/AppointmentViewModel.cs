@@ -113,6 +113,44 @@ namespace App.Clinic.ViewModels
             }
         }
 
+        public string TreatmentName
+        {
+            get
+            {
+                if (Model != null && Model.TreatmentId > 0)
+                {
+                    if (Model.Treatment == null)
+                    {
+                        Model.Treatment = TreatmentServiceProxy
+                            .Current
+                            .Treatments
+                            .FirstOrDefault(p => p.TreatmentId == Model.TreatmentId);
+                    }
+                }
+
+                return Model?.Treatment?.Name ?? string.Empty;
+            }
+        }
+
+        public Treatment? SelectedTreatment
+        {
+            get
+            {
+                return Model?.Treatment;
+            }
+
+            set
+            {
+                var selectedTreatment = value;
+                if (Model != null)
+                {
+                    Model.Treatment = selectedTreatment;
+                    Model.TreatmentId = selectedTreatment?.TreatmentId ?? 0;
+                }
+
+            }
+        }
+
         public ObservableCollection<Patient> Patients
         {
             get
@@ -126,6 +164,14 @@ namespace App.Clinic.ViewModels
             get
             {
                 return new ObservableCollection<Physician>(PhysicianServiceProxy.Current.Physicians);
+            }
+        }
+
+        public ObservableCollection<Treatment> Treatments
+        {
+            get
+            {
+                return new ObservableCollection<Treatment>(TreatmentServiceProxy.Current.Treatments);
             }
         }
 
@@ -220,13 +266,13 @@ namespace App.Clinic.ViewModels
             Shell.Current.GoToAsync("//Appointments");
         }
 
-        public void DoEdit(AppointmentViewModel? pvm)
+        public void DoEdit(AppointmentViewModel? avm)
         {
-            if (pvm == null)
+            if (avm == null)
             {
                 return;
             }
-            var selectedAppointmentId = pvm?.Id ?? 0;
+            var selectedAppointmentId = avm?.Id ?? 0;
             Shell.Current.GoToAsync($"//AppointmentDetails?appointmentId={selectedAppointmentId}");
         }
 

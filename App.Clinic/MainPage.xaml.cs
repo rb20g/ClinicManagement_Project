@@ -30,5 +30,11 @@
             Shell.Current.GoToAsync("//Appointments");
 
         }
+
+        private void TreatmentsClicked(object sender, EventArgs e)
+        {
+            Shell.Current.GoToAsync("//Treatments");
+
+        }
     }
 }

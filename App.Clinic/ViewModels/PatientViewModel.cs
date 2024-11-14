@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +17,7 @@ namespace App.Clinic.ViewModels
         public Patient? Model { get; set; }
         public ICommand? DeleteCommand { get; set; }
         public ICommand? EditCommand { get; set; }
+        //private readonly InsuranceServiceProxy _insuranceService;
 
 
         public int Id
@@ -126,6 +129,55 @@ namespace App.Clinic.ViewModels
             }
         }
 
+        public string InsuranceName
+        {
+            get
+            {
+                if (Model != null && Model.InsuranceId > 0)
+                {
+                    if (Model.Insurance == null)
+                    {
+                        Model.Insurance = InsuranceServiceProxy
+                            .Current
+                            .Insurances
+                            .FirstOrDefault(p => p.Id == Model.InsuranceId);
+                    }
+                }
+
+                return Model?.Insurance?.Name ?? string.Empty;
+            }
+        }
+
+        public Insurance? SelectedInsurance
+        {
+            get
+            {
+                return Model?.Insurance;
+            }
+
+            set
+            {
+                var selectedInsurance = value;
+                if (Model != null)
+                {
+                    Model.Insurance = selectedInsurance;
+                    Model.InsuranceId = selectedInsurance?.Id ?? 0;
+                }
+
+            }
+        }
+
+        public ObservableCollection<Insurance> Insurances
+        {
+            get
+            {
+                return new ObservableCollection<Insurance>(InsuranceServiceProxy.Current.Insurances);
+            }
+        }
+
+        //public ObservableCollection<Insurance> InsurancePlans { get; set; }
+        //public Insurance Insurance { get; set; }
+
         public void SetupCommands()
         {
             DeleteCommand = new Command(DoDelete);
@@ -151,16 +203,33 @@ namespace App.Clinic.ViewModels
 
         public PatientViewModel()
         {
+            //_insuranceService = new InsuranceServiceProxy();
+            //InsurancePlans = new ObservableCollection<Insurance>();
+            //LoadInsurancePlans();
             Model = new Patient();
             //now if Model is null, we know something went wrong
             SetupCommands();
+            
         }
 
         public PatientViewModel(Patient? _model) //conversion constructer for Patient Model to PatientViewModel
         {
+            //_insuranceService = new InsuranceServiceProxy();
+            //InsurancePlans = new ObservableCollection<Insurance>();
+            //LoadInsurancePlans();
             Model = _model;
             SetupCommands();
+
         }
+        /*
+        private async void LoadInsurancePlans()
+        {
+            var plans = await _insuranceService.GetInsurancePlans();
+            foreach (var plan in plans)
+            {
+                InsurancePlans.Add(plan);
+            }
+        }*/
 
         public void ExecuteAdd()
         {
@@ -173,5 +242,6 @@ namespace App.Clinic.ViewModels
 
             Shell.Current.GoToAsync("//Patients");
         }
+
     }
 }

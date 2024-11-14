@@ -2,10 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App.Clinic.Views.TreatmentManagementView"
-             Title="TreatmentManagementView">
+             Title="TreatmentManagementView"
+             NavigatedTo="TreatmentManagement_NavigatedTo"
+             >
     <VerticalStackLayout>
         <ListView
             ItemsSource="{Binding Treatments}"
+            SelectedItem="{Binding SelectedTreatment}"
             >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -13,18 +16,16 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
-                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Label FontAttributes="Bold" Grid.Column="0" Text="{Binding TreatmentId}"/>
+                            <Label FontAttributes="Bold" Grid.Column="0" Text="{Binding Id}"/>
                             <Label Grid.Column="1" Text="{Binding Name}"/>
-                            <Label Grid.Column="1" Text="{Binding Price}"/>
-                            <Button Grid.Column="4" Text="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
-                            <Button Grid.Column="5" Text="Delete" Command="{Binding DeleteCommand}" Clicked="RefreshClicked"/>
-
-
+                            <Label Grid.Column="2" Text="{Binding Price}"/>
+                            <Button Grid.Column="3" Text="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
+                            <Button Grid.Column="4" Text="Delete" Command="{Binding DeleteCommand}" Clicked="RefreshClicked"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

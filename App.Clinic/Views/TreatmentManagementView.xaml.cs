@@ -21,8 +21,27 @@ public partial class TreatmentManagementView : ContentPage, INotifyPropertyChang
 		Shell.Current.GoToAsync("//TreatmentDetails");
 	}
 
-	private void RefreshClicked(object sender, EventArgs e)
+    private void EditClicked(object sender, EventArgs e)
+    {
+        var selectedTreatmentId = (BindingContext as TreatmentManagementViewModel)?
+            .SelectedTreatment?.Id ?? 0;
+        Shell.Current.GoToAsync($"//TreatmentDetails?treatmentId={selectedTreatmentId}");
+    }
+
+    private void DeleteClicked(object sender, EventArgs e)
+    {
+        (BindingContext as TreatmentManagementViewModel)?.Delete();
+    }
+
+    private void RefreshClicked(object sender, EventArgs e)
+    {
+        (BindingContext as TreatmentManagementViewModel)?.Refresh();
+    }
+
+    private void TreatmentManagement_NavigatedTo(object sender, NavigationEventArgs e)
 	{
 		(BindingContext as TreatmentManagementViewModel)?.Refresh();
 	}
+
+ 
 }

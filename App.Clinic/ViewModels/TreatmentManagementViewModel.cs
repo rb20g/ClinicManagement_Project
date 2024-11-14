@@ -26,11 +26,21 @@ namespace App.Clinic.ViewModels
             get
             {
                 return new ObservableCollection<TreatmentViewModel>(
-                    _TSvc.Treatments.Select(a => new TreatmentViewModel(a)));
+                    _TSvc.Treatments.Select(t => new TreatmentViewModel(t)));
             }
 
         }
         public TreatmentViewModel? SelectedTreatment { get; set; }
+        public void Delete()
+        {
+            if (SelectedTreatment == null)
+            {
+                return;
+            }
+            TreatmentServiceProxy.Current.DeleteTreatment(SelectedTreatment.Id);
+
+            Refresh();
+        }
 
         public void Refresh()
         {

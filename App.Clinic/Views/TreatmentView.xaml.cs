@@ -4,9 +4,11 @@ using Library.Clinic.Services;
 
 namespace App.Clinic.Views;
 
+[QueryProperty(nameof(TreatmentId), "treatmentId")]
 public partial class TreatmentView : ContentPage
 {
-	public TreatmentView()
+    
+    public TreatmentView()
 	{
 		InitializeComponent();
 		BindingContext = new TreatmentViewModel();
@@ -29,7 +31,7 @@ public partial class TreatmentView : ContentPage
         if (TreatmentId > 0)
         {
             var model = TreatmentServiceProxy.Current
-                .Treatments.FirstOrDefault(p => p.TreatmentId == TreatmentId);
+                .Treatments.FirstOrDefault(p => p.Id == TreatmentId);
 
             if (model != null)
             {

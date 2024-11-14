@@ -10,7 +10,9 @@
     <VerticalStackLayout>
         <Grid>
             <Grid.ColumnDefinitions>
-       
+
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
@@ -36,7 +38,14 @@
             <Entry Grid.Column="9" Text="{Binding Gender}"/>
             <Label Grid.Column="10" Text="Medical Notes:"></Label>
             <Entry Grid.Column="11" Text="{Binding MedicalNotes}"/>
+
+
         </Grid>
+        <Picker 
+            Title="Select Insurance Plan"
+            ItemsSource="{Binding Insurances}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding SelectedInsurance, Mode=TwoWay}" />
         <Button
             Text="Ok"
             Clicked="AddClicked"

@@ -18,7 +18,7 @@ public partial class AppointmentManagement : ContentPage, INotifyPropertyChanged
 
     private void AddClicked(object sender, EventArgs e)
     {
-        Shell.Current.GoToAsync("//AppointmentDetails");
+        Shell.Current.GoToAsync("//AppointmentDetails?appointmentId=0");
     }
 
     private void EditClicked(object sender, EventArgs e)

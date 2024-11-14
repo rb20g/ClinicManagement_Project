@@ -33,6 +33,7 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Label FontAttributes="Bold" Grid.Column="0" Text="{Binding Id}"/>
                             <Label Grid.Column="1" Text="{Binding Name}"/>
@@ -41,8 +42,9 @@
                             <Label Grid.Column="4" Text="{Binding Race}"/>
                             <Label Grid.Column="5" Text="{Binding Gender}"/>
                             <Label Grid.Column="6" Text="{Binding MedicalNotes}"/>
-                            <Button Grid.Column="7" Text="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
-                            <Button Grid.Column="8" Text="Delete" Command="{Binding DeleteCommand}" Clicked="RefreshClicked"/>
+                            <Label Grid.Column="7" Text="{Binding InsuranceName}"/>
+                            <Button Grid.Column="8" Text="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
+                            <Button Grid.Column="9" Text="Delete" Command="{Binding DeleteCommand}" Clicked="RefreshClicked"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

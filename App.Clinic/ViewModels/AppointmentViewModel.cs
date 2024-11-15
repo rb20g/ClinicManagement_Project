@@ -56,6 +56,25 @@ namespace App.Clinic.ViewModels
             }
         }
 
+        public string PatientInsurance
+        {
+            get
+            {
+                if (Model != null && Model.PatientId > 0)
+                {
+                    if (Model.Patient == null)
+                    {
+                        Model.Patient = PatientServiceProxy
+                            .Current
+                            .Patients
+                            .FirstOrDefault(p => p.Id == Model.PatientId);
+                    }
+                }
+
+                return Model?.Patient?.Insurance?.Name ?? string.Empty;
+            }
+        }
+
         public Patient? SelectedPatient
         {
             get
@@ -113,6 +132,122 @@ namespace App.Clinic.ViewModels
             }
         }
 
+        public string TreatmentName
+        {
+            get
+            {
+                if (Model != null && Model.TreatmentId > 0)
+                {
+                    if (Model.Treatment == null)
+                    {
+                        Model.Treatment = TreatmentServiceProxy
+                            .Current
+                            .Treatments
+                            .FirstOrDefault(p => p.Id == Model.TreatmentId);
+                    }
+                }
+
+                return Model?.Treatment?.Name ?? string.Empty;
+            }
+        }
+
+        public Treatment? SelectedTreatment
+        {
+            get
+            {
+                return Model?.Treatment;
+            }
+
+            set
+            {
+                var selectedTreatment = value;
+                if (Model != null)
+                {
+                    Model.Treatment = selectedTreatment;
+                    Model.TreatmentId = selectedTreatment?.Id ?? 0;
+                }
+
+            }
+        }
+        public string InsuranceName
+        {
+            get
+            {
+                if (Model != null && Model.Patient?.InsuranceId > 0)
+                {
+                    if (Model.Insurance == null)
+                    {
+                        Model.Insurance = InsuranceServiceProxy
+                            .Current
+                            .Insurances
+                            .FirstOrDefault(p => p.Id == Model.Patient.InsuranceId);
+                    }
+                }
+
+                return Model?.Insurance?.Name ?? string.Empty;
+            }
+        }
+
+        public double TreatmentPrice
+        {
+            get
+            {
+                if (Model != null && Model.TreatmentId > 0)
+                {
+                    if (Model.Treatment?.Price == null)
+                    {
+                        Model.Treatment = TreatmentServiceProxy
+                            .Current
+                            .Treatments
+                            .FirstOrDefault(p => p.Id == Model.TreatmentId);
+                    }
+                }
+                return Model?.Treatment?.Price ?? double.NaN;
+            }
+        }
+
+        public double InsurancePrice
+        {
+            get
+            {
+                if (Model != null && TreatmentPrice > 0)
+                {
+                    InsuranceServiceProxy.Current.AddOrUpdateTreatmentPrice(Model.Insurance, TreatmentPrice);
+                }
+                return Model?.Insurance?.DiscountPrice ?? double.NaN;
+            }
+
+            
+        }
+
+        public Insurance? SelectedInsurance
+        {
+            get
+            {
+                return Model?.Insurance;
+            }
+
+            set
+            {
+                var selectedInsurance = value;
+                if (Model != null)
+                {
+                    Model.Insurance = selectedInsurance;
+                    Model.Patient.InsuranceId = selectedInsurance?.Id ?? 0;
+                }
+
+            }
+        }
+
+        public ObservableCollection<Insurance> Insurances
+        {
+            get
+            {
+                return new ObservableCollection<Insurance>(InsuranceServiceProxy.Current.Insurances);
+            }
+        }
+
+
         public ObservableCollection<Patient> Patients
         {
             get
@@ -126,6 +261,14 @@ namespace App.Clinic.ViewModels
             get
             {
                 return new ObservableCollection<Physician>(PhysicianServiceProxy.Current.Physicians);
+            }
+        }
+
+        public ObservableCollection<Treatment> Treatments
+        {
+            get
+            {
+                return new ObservableCollection<Treatment>(TreatmentServiceProxy.Current.Treatments);
             }
         }
 
@@ -150,9 +293,12 @@ namespace App.Clinic.ViewModels
                
                 if (Model.StartTime != null)
                 {
+                    Model.StartTime = StartDate.Date + StartTime;
+                    Model.EndTime = Model.StartTime.Value.AddHours(1);
+                    /*
                     Model.StartTime = StartDate;
                     Model.StartTime = Model.StartTime.Value.AddHours(StartTime.Hours);
-                    Model.EndTime = Model.StartTime.Value.AddHours(1);
+                    Model.EndTime = Model.StartTime.Value.AddHours(1);*/
                 }
             }
         }
@@ -220,13 +366,13 @@ namespace App.Clinic.ViewModels
             Shell.Current.GoToAsync("//Appointments");
         }
 
-        public void DoEdit(AppointmentViewModel? pvm)
+        public void DoEdit(AppointmentViewModel? avm)
         {
-            if (pvm == null)
+            if (avm == null)
             {
                 return;
             }
-            var selectedAppointmentId = pvm?.Id ?? 0;
+            var selectedAppointmentId = avm?.Id ?? 0;
             Shell.Current.GoToAsync($"//AppointmentDetails?appointmentId={selectedAppointmentId}");
         }
 

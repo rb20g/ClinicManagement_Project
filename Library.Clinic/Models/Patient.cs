@@ -11,14 +11,14 @@ namespace Library.Clinic.Models
     {
         public override string ToString() //Need this to print the actual names and not the fully qualified assembly name
         {
-            return $"[{Id}] {Name} {Address} {Birthday} {Race} {Gender} {MedicalNotes}";
+            return $"[{Id}] {Name} {Address} {Birthday} {Race} {Gender} {MedicalNotes} {Insurance}";
             //return Name + " " + Address + " " + Birthday + " " + Race + " " + Gender + " " + MedicalNotes;
         }
         public string Display
         {
             get
             {
-                return $"[{Id}] {Name} {Address} {Birthday} {Race} {Gender} {MedicalNotes}";
+                return $"[{Id}] {Name} {Address} {Birthday} {Race} {Gender} {MedicalNotes} {Insurance}";
             }
         }
 
@@ -55,8 +55,11 @@ namespace Library.Clinic.Models
         public string Race { get; set; }
         public string Gender { get; set; }
         public string MedicalNotes { get; set; }
+        public int InsuranceId { get; set; }
+        public Insurance? Insurance {  get; set; }
 
-       
+
+
 
         public Patient()
         {

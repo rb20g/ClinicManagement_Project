@@ -24,6 +24,9 @@ namespace Library.Clinic.Models
         public Patient? Patient { get; set; }
         public int PhysicianId { get; set; }
         public Physician? Physician { get; set; }
+        public int TreatmentId { get; set; }
+        public Treatment? Treatment { get; set; }
+        public Insurance? Insurance { get; set; }
    
 
         

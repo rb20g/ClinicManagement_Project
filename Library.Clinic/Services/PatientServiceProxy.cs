@@ -102,6 +102,7 @@ namespace Library.Clinic.Services   //behavior role, where the behavior for the 
             }
 
         }
+
         public int GetPatient(string PatName)
         {
             for(int i = 0; i < Patients.Count; i++)

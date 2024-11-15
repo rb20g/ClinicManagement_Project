@@ -8,73 +8,88 @@
     <VerticalStackLayout>
         <ListView
             ItemsSource="{Binding Appointments}"
-            SelectedItem="{Binding SelectedAppointment}"
-            >
+            SelectedItem="{Binding SelectedAppointment}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
-                                <!-- Patient Display-->
+                        <StackLayout>
+                            <!-- First line: Patient, Physician, Start Time, End Time, Edit, Delete -->
+                            <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0"
-                                    Text="Patient:"/>
-                                <Label Grid.Column="1"
-                                    Text="{Binding PatientName}"/>
-                            </Grid>
-                            <Grid Grid.Column="1">
-                                <!-- Patient Display-->
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0"
-                                    Text="Physician:"/>
-                                <Label Grid.Column="1"
-                                    Text="{Binding PhysicianName}"/>
-                            </Grid>
-                            <Grid Grid.Column="2">
-                                <!-- Start Time Display-->
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0"
-                                    Text="Appointment Start:"/>
-                                <Label Grid.Column="1"
-                                    Text="{Binding StartDate}"/>
-                            </Grid>
-                            <Grid Grid.Column="3">
-                                <!-- End Time Display-->
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0"
-                                    Text="Appointment End:"/>
-                                <Label Grid.Column="1"
-                                    Text="{Binding EndDate}"/>
-                            </Grid>
-                            <Button Grid.Column="4" Text="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
-                            <Button Grid.Column="5" Text="Delete" Command="{Binding DeleteCommand}" Clicked="RefreshClicked"/>
 
+                                <!-- Patient Name -->
+                                <Label Grid.Column="0" Text="Patient:" FontAttributes="Bold"/>
+                                <Label Grid.Column="1" Text="{Binding PatientName}" />
 
+                                <!-- Physician Name -->
+                                <Label Grid.Column="2" Text="Physician:" FontAttributes="Bold"/>
+                                <Label Grid.Column="3" Text="{Binding PhysicianName}" />
+
+                                <!-- Start Time -->
+                                <Label Grid.Column="4" Text="Start Time:" FontAttributes="Bold"/>
+                                <Label Grid.Column="5" Text="{Binding StartDate}" />
+
+                                <!-- End Time -->
+                                <Label Grid.Column="6" Text="End Time:" FontAttributes="Bold"/>
+                                <Label Grid.Column="7" Text="{Binding EndDate}" />
                             </Grid>
+
+                            <!-- Edit and Delete Buttons on the same row -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="1" Text="Edit" Command="{Binding EditCommand}" CommandParameter="{Binding}" />
+                                <Button Grid.Column="2" Text="Delete" Command="{Binding DeleteCommand}" Clicked="RefreshClicked" />
+                            </Grid>
+
+                            <!-- Second line: Insurance Plan, Treatment, Treatment Price, Insurance Price -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Insurance Plan -->
+                                <Label Grid.Column="0" Text="Insurance Plan:" FontAttributes="Bold"/>
+                                <Label Grid.Column="1" Text="{Binding InsuranceName}" />
+
+                                <!-- Treatment -->
+                                <Label Grid.Column="2" Text="Treatment:" FontAttributes="Bold"/>
+                                <Label Grid.Column="3" Text="{Binding TreatmentName}" />
+
+                                <!-- Treatment Price -->
+                                <Label Grid.Column="4" Text="Treatment Price:" FontAttributes="Bold"/>
+                                <Label Grid.Column="5" Text="{Binding TreatmentPrice}" />
+
+                                <!-- Insurance Discounted Price -->
+                                <Label Grid.Column="6" Text="Insurance Price:" FontAttributes="Bold"/>
+                                <Label Grid.Column="7" Text="{Binding InsurancePrice}" />
+                            </Grid>
+                        </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        
+        <!-- Schedule Appointment and Cancel Buttons -->
         <Button Text="Schedule Appointment" Clicked="AddClicked"/>
         <Button Text="Cancel" Clicked="CancelClicked"/>
     </VerticalStackLayout>

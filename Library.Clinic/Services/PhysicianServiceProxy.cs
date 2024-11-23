@@ -1,4 +1,7 @@
-﻿using Library.Clinic.Models;
+﻿using Library.Clinic.DTO;
+using Library.Clinic.Models;
+using Newtonsoft.Json;
+using PP.Library.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +32,9 @@ namespace Library.Clinic.Services
         {
             instance = null;
 
-            Physicians = new List<Physician>();
+            var physiciansData = new WebRequestHandler().Get("/Physician").Result;
+
+            Physicians = JsonConvert.DeserializeObject<List<PhysicianDTO>>(physiciansData) ?? new List<PhysicianDTO>();
         }
         public int LastKey
         {
@@ -43,8 +48,8 @@ namespace Library.Clinic.Services
             }
         }
 
-        private List<Physician> physicians;
-        public List<Physician> Physicians
+        private List<PhysicianDTO> physicians;
+        public List<PhysicianDTO> Physicians
         {
             get
             {
@@ -60,7 +65,7 @@ namespace Library.Clinic.Services
         }
 
 
-        public void AddOrUpdatePhysician(Physician physician) //responsible for constructing the list, but the application is responsible for constructing the individual objects 
+        public void AddOrUpdatePhysician(PhysicianDTO physician) //responsible for constructing the list, but the application is responsible for constructing the individual objects 
         {
             bool isAdd = false;
             if (physician.Id <= 0)
@@ -75,12 +80,14 @@ namespace Library.Clinic.Services
 
         }
 
-        public void DeletePhysician(int id)
+        public async void DeletePhysician(int id)
         {
             var physicianToRemove = Physicians.FirstOrDefault(p => p.Id == id);
             if (physicianToRemove != null)
             {
                 Physicians.Remove(physicianToRemove);
+
+                await new WebRequestHandler().Delete($"/Physician/{id}");
             }
         }
 

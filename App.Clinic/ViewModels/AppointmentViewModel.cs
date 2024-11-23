@@ -1,4 +1,5 @@
-﻿using Library.Clinic.Models;
+﻿using Library.Clinic.DTO;
+using Library.Clinic.Models;
 using Library.Clinic.Services;
 using System;
 using System.Collections.Generic;
@@ -113,7 +114,7 @@ namespace App.Clinic.ViewModels
             }
         }
 
-        public Physician? SelectedPhysician
+        public PhysicianDTO? SelectedPhysician
         {
             get
             {
@@ -256,11 +257,11 @@ namespace App.Clinic.ViewModels
             }
         }
 
-        public ObservableCollection<Physician> Physicians
+        public ObservableCollection<PhysicianDTO> Physicians
         {
             get
             {
-                return new ObservableCollection<Physician>(PhysicianServiceProxy.Current.Physicians);
+                return new ObservableCollection<PhysicianDTO>(PhysicianServiceProxy.Current.Physicians);
             }
         }
 

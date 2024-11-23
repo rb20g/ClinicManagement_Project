@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Clinic.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,7 @@ namespace Library.Clinic.Models
         public int PatientId { get; set; }
         public Patient? Patient { get; set; }
         public int PhysicianId { get; set; }
-        public Physician? Physician { get; set; }
+        public PhysicianDTO? Physician { get; set; }
         public int TreatmentId { get; set; }
         public Treatment? Treatment { get; set; }
         public Insurance? Insurance { get; set; }

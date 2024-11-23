@@ -1,19 +1,13 @@
-﻿using Library.Clinic.DTO;
-using Library.Clinic.Services;
+﻿using Library.Clinic.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
-namespace Library.Clinic.Models
+namespace Library.Clinic.DTO
 {
-    public class Physician
+    public class PhysicianDTO
     {
         public override string ToString() //Need this to print the actual names and not the fully qualified assembly name
         {
@@ -29,38 +23,14 @@ namespace Library.Clinic.Models
         }
 
         public int Id { get; set; }  //in every models to grab one and only one object of that type (in this case patient)
-                                      //Guid puts in a hash function, don't have to check for collisons, easier to troubleshoot with in ID's 
-        private string? name;  //field, data member 
-        public string? Name
-        {
-            get
-            {
-                return name ?? string.Empty;
-            }
-
-            set
-            {
-                name = value;
-            }
-        }
-
+                                     //Guid puts in a hash function, don't have to check for collisons, easier to troubleshoot with in ID's 
+        public string? Name { get; set; }
         public string? LicenseNumber { get; set; }
         public DateTime GraduationDate { get; set; }
         public string? Specialization { get; set; }
 
-
-
-     
-
-        public Physician()
-        {
-            Name = string.Empty;
-            LicenseNumber = string.Empty;
-            GraduationDate = DateTime.MinValue;
-            Specialization = string.Empty;
-        }
-        
-        public Physician(PhysicianDTO p)
+        public PhysicianDTO() { }
+        public PhysicianDTO(Physician p)
         {
             Id = p.Id;
             Name = p.Name;
@@ -68,5 +38,6 @@ namespace Library.Clinic.Models
             GraduationDate = p.GraduationDate;
             Specialization = p.Specialization;
         }
+
     }
 }

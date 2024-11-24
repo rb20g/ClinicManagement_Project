@@ -51,9 +51,9 @@ namespace API.Clinic.Enterprise
         public Physician? AddOrUpdate(PhysicianDTO? physician)
         {
            if (physician == null)
-            {
+           {
                 return null;
-            }
+           }
            return FakeDatabase.AddOrUpdatePhysician(new Physician(physician));
         }
     }

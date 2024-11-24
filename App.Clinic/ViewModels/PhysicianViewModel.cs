@@ -122,6 +122,7 @@ namespace App.Clinic.ViewModels
             }
             var selectedPhysicianId = pvm?.Id ?? 0;
             Shell.Current.GoToAsync($"//PhysicianDetails?physicianId={selectedPhysicianId}");
+            
         }
 
         public PhysicianViewModel()

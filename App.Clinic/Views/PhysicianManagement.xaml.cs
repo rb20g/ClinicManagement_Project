@@ -26,6 +26,7 @@ public partial class PhysicianManagement : ContentPage, INotifyPropertyChanged
         var selectedPhysicianId = (BindingContext as PhysicianManagementViewModel)?
             .SelectedPhysician?.Id ?? 0;
         Shell.Current.GoToAsync($"//PhysicianDetails?physicianId={selectedPhysicianId}");
+        
     }
 
     private void DeleteClicked(object sender, EventArgs e)

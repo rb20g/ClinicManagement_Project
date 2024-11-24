@@ -1,4 +1,5 @@
 ﻿using Library.Clinic.Models;
+using System;
 using System.Runtime.CompilerServices;
 
 namespace API.Clinic.Database
@@ -42,6 +43,17 @@ namespace API.Clinic.Database
             {
                 physician.Id = LastKey + 1;
                 isAdd = true;
+            }
+            else if(physician.Id > 0)
+            {
+                var currentPhysician = Physicians.FirstOrDefault(p => p.Id == physician.Id);
+                var index = Physicians.Count;
+                if (currentPhysician != null)
+                {
+                    index = Physicians.IndexOf(currentPhysician);
+                    Physicians.RemoveAt(index);
+                }
+                Physicians.Insert(index, physician);
             }
             if (isAdd)
             {

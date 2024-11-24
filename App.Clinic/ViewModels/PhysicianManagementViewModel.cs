@@ -35,7 +35,7 @@ namespace App.Clinic.ViewModels
                     .Where(p => p.Name.ToUpper().Contains(Query?.ToUpper() ?? string.Empty))
                     .Select(p => new PhysicianViewModel(p))
                     );
-
+          
                 return retVal;
             }
         }

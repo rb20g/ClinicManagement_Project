@@ -44,6 +44,7 @@ namespace API.Clinic.Database
                 physician.Id = LastKey + 1;
                 isAdd = true;
             }
+
             else if(physician.Id > 0)
             {
                 var currentPhysician = Physicians.FirstOrDefault(p => p.Id == physician.Id);
@@ -55,6 +56,7 @@ namespace API.Clinic.Database
                 }
                 Physicians.Insert(index, physician);
             }
+
             if (isAdd)
             {
                 Physicians.Add(physician);

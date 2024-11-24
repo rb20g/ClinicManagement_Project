@@ -34,6 +34,12 @@ namespace API.Clinic.Controllers
             return new PhysicianEC().Delete(id);
         }
 
+        [HttpPost("Search")]
+        public List<PhysicianDTO> Search([FromBody] Query q)
+        {
+            return new PhysicianEC().Search(q.Content ?? string.Empty)?.ToList() ?? new List<PhysicianDTO>();
+        }
+
         [HttpPost]
         public Physician? AddOrUpdate([FromBody] PhysicianDTO? physician)
         {

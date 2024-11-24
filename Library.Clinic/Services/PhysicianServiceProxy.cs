@@ -64,20 +64,38 @@ namespace Library.Clinic.Services
             }
         }
 
-
-        public void AddOrUpdatePhysician(PhysicianDTO physician) //responsible for constructing the list, but the application is responsible for constructing the individual objects 
+        public async Task<List<PhysicianDTO>> Search(string query)
         {
-            bool isAdd = false;
-            if (physician.Id <= 0)
+            var physiciansPayload = await new WebRequestHandler()
+                .Post("/Physician/Search", new Query(query));
+
+            Physicians = JsonConvert.DeserializeObject<List<PhysicianDTO>>(physiciansPayload) 
+                ?? new List<PhysicianDTO>();
+
+            return Physicians;
+        }
+
+        public async Task<PhysicianDTO?> AddOrUpdatePhysician(PhysicianDTO physician) //responsible for constructing the list, but the application is responsible for constructing the individual objects 
+        {
+            var payload = await new WebRequestHandler().Post("/physician", physician);
+            var newPhysician = JsonConvert.DeserializeObject<PhysicianDTO>(payload);
+            if(newPhysician != null && newPhysician.Id > 0 && physician.Id == 0)
             {
-                physician.Id = LastKey + 1;
-                isAdd = true;
+                Physicians.Add(newPhysician);
             }
-            if (isAdd)
+            else if(newPhysician != null && physician != null && physician.Id > 0 && physician.Id == newPhysician.Id)
             {
-                Physicians.Add(physician);
+                var currentPhysician = Physicians.FirstOrDefault(p =>  p.Id == newPhysician.Id);
+                var index = Physicians.Count;
+                if(currentPhysician != null)
+                {
+                    index = Physicians.IndexOf(currentPhysician);
+                    Physicians.RemoveAt(index);
+                }
+                Physicians.Insert(index, newPhysician);
             }
 
+            return newPhysician;
         }
 
         public async void DeletePhysician(int id)

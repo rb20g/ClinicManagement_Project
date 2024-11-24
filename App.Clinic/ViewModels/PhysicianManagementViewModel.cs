@@ -33,7 +33,6 @@ namespace App.Clinic.ViewModels
                     .Physicians
                     .Where(p => p != null)
                     .Where(p => p.Name.ToUpper().Contains(Query?.ToUpper() ?? string.Empty))
-                    .Take(100)
                     .Select(p => new PhysicianViewModel(p))
                     );
 
@@ -47,7 +46,7 @@ namespace App.Clinic.ViewModels
             {
                 return;
             }
-            PhysicianServiceProxy.Current.DeletePhysician(SelectedPhysician.Model.Id);
+            PhysicianServiceProxy.Current.DeletePhysician(SelectedPhysician.Id);
 
             Refresh();
         }
@@ -55,6 +54,15 @@ namespace App.Clinic.ViewModels
         public void Refresh()
         {
             NotifyPropertyChanged(nameof(Physicians));
+        }
+
+        public async void Search()
+        {
+            if (Query != null)
+            {
+                await PhysicianServiceProxy.Current.Search(Query);
+            }
+            Refresh();
         }
     }
 }

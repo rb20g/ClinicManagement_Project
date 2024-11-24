@@ -137,16 +137,16 @@ namespace App.Clinic.ViewModels
             SetupCommands();
         }
 
-        public void ExecuteAdd()
+        public async void ExecuteAdd()
         {
             if (Model != null)
             {
-                PhysicianServiceProxy
-                    .Current
-                    .AddOrUpdatePhysician(Model);
+                await PhysicianServiceProxy
+                .Current
+                .AddOrUpdatePhysician(Model);
             }
 
-            Shell.Current.GoToAsync("//Physicians");
+            await Shell.Current.GoToAsync("//Physicians");
         }
     }
 }
